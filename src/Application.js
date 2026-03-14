@@ -3,6 +3,7 @@ import * as THREE from "three";
 export class Application {
   constructor(canvas) {
     this.canvas = canvas;
+
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera(
       window.innerWidth / -2,
@@ -15,15 +16,10 @@ export class Application {
     this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.geometry = new THREE.BoxGeometry(100, 100, 100);
-    this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    this.cube = new THREE.Mesh(this.geometry, this.material);
-    this.scene.add(this.cube);
+    this.initCamera();
 
-    this.camera.position.x = 0;
-    this.camera.position.y = 50;
-    this.camera.position.z = 100;
-    this.camera.lookAt(0, 0, 0);
+    this.cube = createCube();
+    this.scene.add(this.cube);
   }
 
   start() {
@@ -32,5 +28,16 @@ export class Application {
 
   animate(time) {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  initCamera() {
+    this.camera.position.set();
+  }
+
+  createCube() {
+    this.geometry = new THREE.BoxGeometry(100, 100, 100);
+    this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    this.cube = new THREE.Mesh(this.geometry, this.material);
+    return this.cube;
   }
 }
