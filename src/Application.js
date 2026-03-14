@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+/** Application class for managing the 3D scene */
 export class Application {
   constructor(canvas) {
     this.canvas = canvas;
@@ -16,28 +17,30 @@ export class Application {
     this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.initCamera();
+    this.initCamera([100, 100, 100], [0, 0, 0]);
 
-    this.cube = createCube();
-    this.scene.add(this.cube);
+    this.cube1 = this.createCube([0, 0, 0], 100, 0xff0000);
+    this.scene.add(this.cube1);
   }
 
   start() {
-    this.renderer.setAnimationLoop((time) => this.animate(time));
+    this.renderer.setAnimationLoop(() => this.animate());
   }
 
-  animate(time) {
+  animate() {
     this.renderer.render(this.scene, this.camera);
   }
 
-  initCamera() {
-    this.camera.position.set();
+  initCamera(position, lookAt) {
+    this.camera.position.set(...position);
+    this.camera.lookAt(...lookAt);
   }
 
-  createCube() {
-    this.geometry = new THREE.BoxGeometry(100, 100, 100);
-    this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    this.cube = new THREE.Mesh(this.geometry, this.material);
-    return this.cube;
+  createCube(position, size, color) {
+    const geometry = new THREE.BoxGeometry(size, size, size);
+    const material = new THREE.MeshBasicMaterial({ color: color });
+    const cube = new THREE.Mesh(geometry, material);
+    cube.position.set(...position);
+    return cube;
   }
 }
