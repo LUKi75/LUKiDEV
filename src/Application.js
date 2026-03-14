@@ -12,7 +12,25 @@ export class Application {
       0.1,
       1000
     );
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    this.geometry = new THREE.BoxGeometry(100, 100, 100);
+    this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    this.cube = new THREE.Mesh(this.geometry, this.material);
+    this.scene.add(this.cube);
+
+    this.camera.position.x = 0;
+    this.camera.position.y = 50;
+    this.camera.position.z = 100;
+    this.camera.lookAt(0, 0, 0);
+  }
+
+  start() {
+    this.renderer.setAnimationLoop((time) => this.animate(time));
+  }
+
+  animate(time) {
+    this.renderer.render(this.scene, this.camera);
   }
 }
