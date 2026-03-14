@@ -1,21 +1,18 @@
-import { World } from "./engine/World.js";
-import { RenderSystem } from "./systems/RenderSystem.js";
-import { MovementSystem } from "./systems/MovementSystem.js";
+import * as THREE from "three";
 
 export class Application {
   constructor(canvas) {
-    this.world = new World();
-
-    this.world.addSystem(new MovementSystem());
-    this.world.addSystem(new RenderSystem(canvas));
-  }
-
-  start() {
-    requestAnimationFrame(this.loop.bind(this));
-  }
-
-  loop(time) {
-    this.world.update();
-    requestAnimationFrame(this.loop.bind(this));
+    this.canvas = canvas;
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.OrthographicCamera(
+      window.innerWidth / -2,
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      window.innerHeight / -2,
+      0.1,
+      1000
+    );
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 }
