@@ -1,4 +1,3 @@
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { SceneManager } from "./SceneManager.js";
 
 export class Application {
@@ -9,10 +8,7 @@ export class Application {
     this.scene = this.sceneManager.scene;
     this.camera = this.sceneManager.camera;
     this.renderer = this.sceneManager.renderer;
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
-    window.addEventListener("resize", () => this.sceneManager.resizeWindow());
+    this.controls = this.sceneManager.controls;
   }
 
   start() {

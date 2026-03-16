@@ -1,3 +1,4 @@
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import * as THREE from "three";
 
 export class SceneManager {
@@ -7,16 +8,26 @@ export class SceneManager {
     this.scene = null;
     this.camera = null;
     this.renderer = null;
+    this.controls = null;
 
     this.createScene();
-    this.
+    this.createCamera();
+    this.createRenderer();
+    this.createControls();
+
+    window.addEventListener("resize", () => this.resizeWindow());
   }
 
   createScene() {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x000000);
+    
     const ambientLight = new THREE.AmbientLight(0xffffff);
     this.scene.add(ambientLight);
+    const gridHelper = new THREE.GridHelper(200, 20);
+    this.scene.add(gridHelper);
+    const axesHelper = new THREE.AxesHelper(100);
+    this.scene.add(axesHelper);
   }
 
   createCamera() {
@@ -30,6 +41,13 @@ export class SceneManager {
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  createControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.keys = {
+      
+    }
   }
 
   resizeWindow() {
