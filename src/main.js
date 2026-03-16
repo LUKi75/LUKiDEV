@@ -1,4 +1,4 @@
-import { Application } from "./Application.js";
+import { Application } from "./core/Application.js";
 
 function main() {
   const canvas = document.getElementById("gameCanvas");
